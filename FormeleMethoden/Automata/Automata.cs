@@ -69,7 +69,7 @@ namespace Automata
 
             foreach (Transition<T> t in transitions)
             {
-                System.Diagnostics.Debug.WriteLine(t);
+                System.Diagnostics.Debug.WriteLine(t.ToString());
             }
         }
 

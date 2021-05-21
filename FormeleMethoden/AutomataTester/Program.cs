@@ -8,7 +8,11 @@ namespace AutomataTester
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            Automata.Automata<Transition> automata1 = new Automata();
+            var automata1 = Automata.TestAutomata.getExampleSlide8Lesson2();
+            var automata2 = Automata.TestAutomata.getExampleSlide14Lesson2();
+
+            automata1.printTransitions();
+            automata2.printTransitions();
 
         }
     }

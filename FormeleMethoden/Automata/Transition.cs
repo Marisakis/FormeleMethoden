@@ -68,7 +68,7 @@ namespace Automata
             return symbol;
         }
 
-        public String toString()
+        public String ToString()
         {
             return "(" + this.getFromState() + ", " + this.getSymbol() + ")" + "-->" + this.getToState();
         }
