@@ -8,30 +8,7 @@ namespace Regex
     class BlackBox<T> where T : IComparable<T>
     {
 
-        //public static char[] operators = { 'ε', '*', '+', '(', ')', '.', '|' };
-        //Order of operations: (), 
-
-
-        /*private T fromState;
-        private char symbol;
-        private T toState;*/
-
-
-        //public static int nextCharacter;
         public static int stateCounter;
-
-        /*public BlackBox(T fromState, string input, T toState)
-        {
-            this.fromState = fromState;
-            var regex = input;
-            this.toState = toState;
-
-
-
-
-
-
-        }*/
 
         public static T getNextState()
         {
@@ -46,7 +23,6 @@ namespace Regex
             //TODO: assert total bracket numbers ( equals )
            stateCounter = 1;
            var transitions = new SortedSet<Transition<T>>();
-           //var inputarray = input.ToCharArray();
            transitions.UnionWith(GenerateSubTransitions(fromState, input, toState));
            return transitions;
         }
@@ -54,8 +30,7 @@ namespace Regex
         private static ISet<Transition<T>> GenerateSubTransitions(T fromState, string input, T toState)
         {
             var transitions = new SortedSet<Transition<T>>();
-            //
-
+          
             if (input.Length == 0) //safeguard
             {
                 var transition =  new Transition<T>(fromState, toState); 
@@ -102,7 +77,6 @@ namespace Regex
                     }
                 }
 
-
                 //check for ()
                 foreach (char c in input)
                 {
@@ -128,12 +102,6 @@ namespace Regex
                         break;
                     }
                 }
-
-
-                
-
-
-
 
                 //check for rest of operators: ε, +, *, . and only characters
                 var operation = input[1];
@@ -167,15 +135,6 @@ namespace Regex
                             transitions.UnionWith(GenerateSubTransitions(front, input.Substring(2), back));
                             break;
                         }
-                    case '(':
-                        //difficult
-                       
-                        break;
-                    case ')':
-                        //should not happen
-                        break;
-                    case '|':
-                        
                         break;
                     case '.':
                         {
