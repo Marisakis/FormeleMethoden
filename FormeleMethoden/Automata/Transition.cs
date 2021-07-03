@@ -6,7 +6,7 @@ namespace Automata
 
     public class Transition<T> : IComparable<Transition<T>> where T : IComparable<T>
     {
-        public const char EPSILON = '$'; //TODO
+        public const char EPSILON = 'ε'; 
 
 
         private T fromState;
