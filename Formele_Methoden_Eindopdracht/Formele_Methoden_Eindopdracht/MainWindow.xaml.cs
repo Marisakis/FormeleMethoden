@@ -43,6 +43,13 @@ namespace Formele_Methoden_Eindopdracht
             this.createdAutomata.Add("Contains abba", AutomataBuilder.ContainsDFA("abba", new List<char>() { 'a', 'b' }));
             this.createdAutomata.Add("Oneormore a followed by Oneormore b", TestAutomata.AOneOrMoreBOnOrMore_DFA());
             this.createdAutomata.Add("StartsWith ab and EndsWith ba", TestAutomata.StartsWith_ab_Endswith_ba_DFA());
+
+            this.createdAutomata.Add("ab (no epsilon NDFA)", TestAutomata.ab_no_epsilon_NDFA());
+            this.createdAutomata.Add("ba bba (no epsilon NDFA)", TestAutomata.ba_bba_no_epsilon_NDFA());
+            this.createdAutomata.Add("b bba (epsilon NDFA)", TestAutomata.b_bba_with_epsilon_NDFA());
+            this.createdAutomata.Add("ab aab aaa (epsilon NDFA)", TestAutomata.ab_aab_aaa_with_epsilon_NDFA());
+
+
             this.createdAutomata["Contains abba"].Validate();
             //this.createdAutomata.Add("aaa",TestAutomata.RegexAAA());
             //this.createdAutomata.Add("aab", TestAutomata.RegexAAB());
@@ -50,7 +57,7 @@ namespace Formele_Methoden_Eindopdracht
             this.createdAutomata.Add("aorb", TestAutomata.RegexAorB());
             this.createdAutomata.Add("aloop", TestAutomata.RegexAloop());
 
-            TestAutomata.RegexABC().GenerateWordsNotInLanguage(10,25);
+            //TestAutomata.RegexABC().GenerateWordsNotInLanguage(10,25);
 
             UpdateComboBoxes();
 

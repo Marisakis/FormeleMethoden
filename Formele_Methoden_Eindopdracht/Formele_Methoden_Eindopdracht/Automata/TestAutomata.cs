@@ -8,6 +8,8 @@ namespace Formele_Methoden_Eindopdracht
 {
     class TestAutomata
     {
+        #region REGEX_AUTOMATA
+
         public static Automata RegexAAA()
         {
             Automata automata = RegexTranslator.TranslateRegex("aaa");
@@ -43,7 +45,11 @@ namespace Formele_Methoden_Eindopdracht
             return automata;
         }
 
-        public static Automata EvenNumberOfCharacters(char character, List<char> symbols)
+        #endregion
+
+        #region DFA_AUTOMATA
+
+        public static Automata AOneOrMoreBOnOrMore_DFA()
         {
             Automata automata = new Automata(new List<char>() { 'a', 'b' });
 
