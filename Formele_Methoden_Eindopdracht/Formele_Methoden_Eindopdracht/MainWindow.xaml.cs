@@ -60,6 +60,7 @@ namespace Formele_Methoden_Eindopdracht
             cmb_Automata_DropDownClosed(cmb_Automata, null);
             cmb_FirstAutomata_DropDownClosed(cmb_FirstAutomata, null);
             cmb_SecondAutomata_DropDownClosed(cmb_SecondAutomata, null);
+            cmb_FirstAutomata_DropDownClosed(cmb_ConversionAutomata, null);
             cmb_VisualizeAutomata_DropDownClosed(cmb_VisualizeAutomata, null);
             cmb_WordGenerationAutomata_DropDownClosed(cmb_WordGenerationAutomata, null);
 
@@ -499,10 +500,77 @@ namespace Formele_Methoden_Eindopdracht
         {
             Automata automata = this.createdAutomata[cmb_VisualizeAutomata.Text];
             var imageblock = stk_GraphvizPanel.Children.OfType<Image>().FirstOrDefault();
-            var uriSource = new Uri(GraphViz.GraphVizGenerator.generateFiles(automata, "automata" + imagecounter++.ToString())); //To improve: using automata names, but no spaces
+            var uriSource = new Uri(GraphViz.GraphVizGenerator.GenerateFiles(automata, "automata" + imagecounter++.ToString())); //To improve: using automata names, but no spaces
             var image = new BitmapImage(uriSource);
             imageblock.Source = image;
+        }
 
+        private void btn_GenerateWords_Click(object sender, RoutedEventArgs e)
+        {
+            lbl_WordGenerationAutomataMessage.Visibility = Visibility.Hidden;
+            lbl_WordGenerationAutomataMessage.Content = "";
+
+            bool errors = false;
+            if (String.IsNullOrEmpty(txb_WordGenerationLength.Text))
+            {
+                lbl_WordGenerationAutomataMessage.Content += "Length field is empty!\n";
+                errors = true;
+            }
+            if (String.IsNullOrEmpty(txb_WordGenerationCycles.Text))
+            {
+                lbl_WordGenerationAutomataMessage.Content += "Cyles field is empty!\n";
+                errors = true;
+            }
+
+            int length = 0;
+            if (int.TryParse(txb_WordGenerationLength.Text, out length))
+            {
+                if(length > 20)
+                {
+                    lbl_WordGenerationAutomataMessage.Content += "Length can be up to 20 characters!\n";
+                    errors = true;
+                }
+            }
+            else
+            {
+                lbl_ConversionCreateAutomataMessage.Content += "Length input is not a number!\n";
+                errors = true;
+            }
+
+            int cycles = 0;
+            if (int.TryParse(txb_WordGenerationCycles.Text, out cycles))
+            {
+                if (cycles > 50)
+                {
+                    lbl_WordGenerationAutomataMessage.Content += "Cycles can be up to 50 cycles!\n";
+                    errors = true;
+                }
+            }
+            else
+            {
+                lbl_ConversionCreateAutomataMessage.Content += "Cycles input is not a number!\n";
+                errors = true;
+            }
+
+            if (!errors)
+            {
+                Automata automata = this.createdAutomata[cmb_WordGenerationAutomata.Text];
+
+                List<string> words = automata.GenerateWordsInLanguage(length, cycles).ToList();
+                StringBuilder stringBuilder = new StringBuilder();
+                for(int i = 0; i < words.Count; i++)
+                {
+                    stringBuilder.Append(words[i]);
+                    if (i != (words.Count - 1))
+                        stringBuilder.Append(" , ");
+                }
+                txb_WordGenerationOutput.Text = stringBuilder.ToString();
+            }
+            else
+            {
+                lbl_WordGenerationAutomataMessage.Foreground = Brushes.Red;
+                lbl_WordGenerationAutomataMessage.Visibility = Visibility.Visible;
+            }
         }
 
         private Tuple<bool, List<char>> GetSymbolsFromString(string input)
@@ -646,6 +714,24 @@ namespace Formele_Methoden_Eindopdracht
             }
         }
 
+        private void cmb_ConversionAutomata_DropDownClosed(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cmb_ConversionAutomata.Text))
+            {
+                Automata selectedAutomata = this.createdAutomata[cmb_ConversionAutomata.Text];
+                if (selectedAutomata.IsDFA)
+                {
+                    lbl_ConversionAutomataMessage.Content = "DFA";
+                    lbl_ConversionAutomataMessage.Foreground = Brushes.Green;
+                }
+                else
+                {
+                    lbl_ConversionAutomataMessage.Content = "NDFA";
+                    lbl_ConversionAutomataMessage.Foreground = Brushes.Red;
+                }
+            }
+        }
+
         private void cmb_VisualizeAutomata_DropDownClosed(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(cmb_VisualizeAutomata.Text))
@@ -683,10 +769,5 @@ namespace Formele_Methoden_Eindopdracht
         }
 
         #endregion
-
-        private void btn_GenerateWords_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

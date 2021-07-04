@@ -11,7 +11,7 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
     public class GraphVizGenerator
     {
 
-        public static String generateFiles(Automata automata, string filename) //May not contain spaces!
+        public static String GenerateFiles(Automata automata, string filename) //May not contain spaces!
         {
             /*var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;*/
             var savePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -20,7 +20,7 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
             System.Diagnostics.Debug.WriteLine("Creating files in " + savePath);
 
             GenerateGVFile(automata, gvFilePath);
-            generatePNGFromGV(gvFilePath, pngFilePath);
+            GeneratePNGFromGV(gvFilePath, pngFilePath);
             return pngFilePath;
         }
 
@@ -55,12 +55,10 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
 
             writer.WriteLine("}");
             writer.Close();
-
         }
 
-        private static void generatePNGFromGV(string gvFilepath, string pngFilepath) // Does not overwrite files! 
+        private static void GeneratePNGFromGV(string gvFilepath, string pngFilepath) // Does not overwrite files! 
         {
-
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
@@ -69,7 +67,6 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
             process.StartInfo = startInfo;
             process.Start();
             process.WaitForExit();
-
         }
     }
 }
