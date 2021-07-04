@@ -367,16 +367,6 @@ namespace Formele_Methoden_Eindopdracht
             cmb_VisualizeAutomata.SelectedIndex = 0;
         }
 
-        //private void btn_Evaluate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //if(this.activeAutomata != null)
-        //    //{
-        //    //    bool result = ((String.IsNullOrEmpty(txb_Input.Text)) ? false : this.activeAutomata.Evaluate(txb_Input.Text));
-        //    //    lbl_Output.Content = (result) ? "Accepted!" : "Not accepted!";
-        //    //    lbl_Output.Foreground = (result) ? Brushes.LimeGreen : Brushes.Red;
-        //    //}
-        //}
-
         #region MENU_BUTTONS
 
         private void btn_AutomataMenu_Click(object sender, RoutedEventArgs e)

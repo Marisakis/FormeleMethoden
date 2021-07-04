@@ -1,0 +1,13 @@
+digraph graphname {
+0 -> 1 [label=a];
+0 -> 0 [label=b];
+1 -> 2 [label=b];
+1 -> 1 [label=a];
+2 -> 3 [label=b];
+2 -> 1 [label=a];
+3 -> 4 [label=a];
+3 -> 0 [label=b];
+4 -> 4 [label=a];
+4 -> 4 [label=b];
+4 [shape=doublecircle]
+}

@@ -78,12 +78,14 @@ namespace Formele_Methoden_Eindopdracht
         private class PartitionEntry
         { 
             public readonly string StateName;
+            public readonly State.StateType StateType;
             public List<PartitionEntryItem> Items { get { return this.items; } }
             private List<PartitionEntryItem> items;
 
-            public PartitionEntry(string stateName, List<char> symbols)
+            public PartitionEntry(string stateName, State.StateType stateType, List<char> symbols)
             {
                 this.StateName = stateName;
+                this.StateType = stateType;
                 this.items = new List<PartitionEntryItem>();
                 for (int i = 0; i < symbols.Count; i++)
                     this.items.Add(new PartitionEntryItem(symbols[i]));
@@ -112,24 +114,77 @@ namespace Formele_Methoden_Eindopdracht
                 this.symbols = symbols;
             }
 
-            public void AddPartitionEntry(char symbol, string state)
+            public void AddPartitionEntry(char symbol, State.StateType stateType, string state)
             {
                 if (this.entries.Where(m => m.StateName == state).Count() == 0)
-                    this.entries.Add(new PartitionEntry(state, this.symbols));
+                    this.entries.Add(new PartitionEntry(state, stateType, this.symbols));
 
                 this.entries.Where(m => m.StateName == state).First().AddStateItem(symbol, state);
+            }
+
+            public bool ContainsState(string state)
+            {
+                return (this.entries.Where(m => m.StateName == state).Count() > 0);
             }
         }
 
         private class Partition
         {
-            public List<PartitionSegment> primarySegments;
-            public List<PartitionSegment> secondarySegments;
+            public List<PartitionSegment> PrimarySegments { get { return this.primarySegments; } }
+            public List<PartitionSegment> SecondarySegments { get { return this.secondarySegments; } }
 
-            public Partition()
+            private List<PartitionSegment> primarySegments;
+            private List<PartitionSegment> secondarySegments;
+
+            private List<char> symbols;
+
+            public Partition(List<char> symbols)
             {
                 this.primarySegments = new List<PartitionSegment>();
                 this.secondarySegments = new List<PartitionSegment>();
+
+                this.symbols = symbols;
+            }
+
+            public void AddPrimarySegment(string segmentName)
+            {
+                if (this.primarySegments.Where(m => m.SegmentName == segmentName).Count() == 0)
+                    this.primarySegments.Add(new PartitionSegment(segmentName, this.symbols));
+            }
+
+            public void AddSecondarySegment(string segmentName)
+            {
+                if (this.secondarySegments.Where(m => m.SegmentName == segmentName).Count() == 0)
+                    this.secondarySegments.Add(new PartitionSegment(segmentName, this.symbols));
+            }
+
+            public void AddPrimaryEntry(string segmentName, char symbol, State.StateType stateType, string state)
+            {
+                AddPrimarySegment(segmentName);
+                this.primarySegments.Where(m => m.SegmentName == segmentName).First().AddPartitionEntry(symbol, stateType, state);
+            }
+
+            public void AddSecondaryEntry(string segmentName, char symbol, State.StateType stateType, string state)
+            {
+                AddSecondarySegment(segmentName);
+                this.secondarySegments.Where(m => m.SegmentName == segmentName).First().AddPartitionEntry(symbol, stateType, state);
+            }
+
+            public string GetSegmentNameContainingState(string state)
+            {
+                foreach(PartitionSegment primarySegment in this.primarySegments)
+                {
+                    if (primarySegment.ContainsState(state))
+                        return primarySegment.SegmentName;
+                }
+
+                foreach (PartitionSegment secondarySegment in this.secondarySegments)
+                {
+                    if (secondarySegment.ContainsState(state))
+                        return secondarySegment.SegmentName;
+                }
+
+                return "";
             }
         }
 
@@ -137,6 +192,8 @@ namespace Formele_Methoden_Eindopdracht
 
         private List<SetupTableEntry> setupTable;
         private List<Partition> partitions;
+
+        private int partitionNumber = 1;
 
         public AutomataMinimizationTable(Automata automata)
         {
@@ -169,12 +226,65 @@ namespace Formele_Methoden_Eindopdracht
 
         private void ConstructFirstPartition(Automata automata)
         {
+            List<SetupTableEntry> nonEndStateEntries = this.setupTable.Where(m => m.StateType != State.StateType.START_AND_END_STATE || m.StateType != State.StateType.END_STATE).ToList();
+            List<SetupTableEntry> endStateEntries = this.setupTable.Where(m => m.StateType != State.StateType.START_AND_END_STATE || m.StateType != State.StateType.END_STATE).ToList();
 
+            Partition partition = new Partition(automata.symbols);
+
+            foreach (SetupTableEntry nonEndStateEntry in nonEndStateEntries)
+                foreach(SetupTableEntryItem nonEndStateEntryItem in nonEndStateEntry.Items)
+                    partition.AddPrimaryEntry("1", nonEndStateEntryItem.Symbol, nonEndStateEntry.StateType, nonEndStateEntry.StateName);
+
+            foreach (SetupTableEntry endStateEntry in endStateEntries)
+                foreach (SetupTableEntryItem endStateEntryItem in endStateEntry.Items)
+                    partition.AddPrimaryEntry("2", endStateEntryItem.Symbol, endStateEntry.StateType, endStateEntry.StateName);
+
+            this.partitionNumber = 3;
         }
 
         private void ConstructPartitions(Automata automata)
         {
+            Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>> partitionEvaluation = EvaluateLastPartition();
 
+
+        }
+
+        // Returns two dictionaries with keys indicating the segment name and a list of state names which are withing the segment
+        private Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>> EvaluateLastPartition()
+        {
+            Partition lastPartition = this.partitions[this.partitions.Count - 1];
+
+            bool shouldPartition = false;
+            Dictionary<string, List<string>> primaryDictionary = EvaluateSegments(lastPartition.PrimarySegments, ref lastPartition, ref shouldPartition);
+            Dictionary<string, List<string>> secondaryDictionary = EvaluateSegments(lastPartition.SecondarySegments, ref lastPartition, ref shouldPartition);
+
+            return new Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>>(primaryDictionary, secondaryDictionary);
+        }
+
+        // Returns dictionary with keys indicating the segment name and a list of state names which are withing the segment
+        private Dictionary<string, List<string>> EvaluateSegments(List<PartitionSegment> segments, ref Partition lastPartition, ref bool shouldPartition)
+        {
+            Dictionary<string, List<string>> segmentDictionary = new Dictionary<string, List<string>>();
+            foreach (PartitionSegment segment in segments)
+            {
+                Dictionary<string, string> segmentDefinitions = new Dictionary<string, string>();
+                foreach (PartitionEntry entry in segment.Entries)
+                {
+                    //if (segmentDefinitions.ContainsKey(segment.SegmentName))
+                    //    segmentDefinitions.Add(segment.SegmentName, new List<string>());
+                    //segmentDefinitions[segment.SegmentName].Add(entry.StateName);
+
+                    //segmentDefinitions.Add(entry.StateName, segment.SegmentName);
+                }
+
+                shouldPartition = (segmentDefinitions.Count > 1);
+
+                //List<string> segmentNames = segmentDefinitions.Keys.ToList();
+                //foreach (string segmentName in segmentNames)
+                //    segmentDictionary.Add(segmentName, segmentDefinitions[segmentName]);
+            }
+
+            return segmentDictionary;
         }
     }
 }

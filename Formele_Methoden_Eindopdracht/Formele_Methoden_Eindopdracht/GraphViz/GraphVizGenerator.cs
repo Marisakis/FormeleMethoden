@@ -14,10 +14,10 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
         public static String generateFiles(Automata automata, string filename) //May not contain spaces!
         {
             /*var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;*/
-            var tempPath = Path.GetTempPath();
-            var gvFilePath = Path.Combine(tempPath, @"" + filename + ".gv");
-            var pngFilePath = Path.Combine(tempPath, @"" + filename + ".png");
-            System.Diagnostics.Debug.WriteLine("Creating files in " + tempPath);
+            var savePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            var gvFilePath = Path.Combine(savePath, @"" + filename + ".gv");
+            var pngFilePath = Path.Combine(savePath, @"" + filename + ".png");
+            System.Diagnostics.Debug.WriteLine("Creating files in " + savePath);
 
             GenerateGVFile(automata, gvFilePath);
             generatePNGFromGV(gvFilePath, pngFilePath);
