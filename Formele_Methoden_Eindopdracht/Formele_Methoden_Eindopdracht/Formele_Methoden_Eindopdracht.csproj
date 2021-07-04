@@ -62,6 +62,7 @@
     <Compile Include="Automata\State.cs" />
     <Compile Include="Automata\TestAutomata.cs" />
     <Compile Include="Automata\Transition.cs" />
+    <Compile Include="GraphViz\GraphVizGenerator.cs" />
     <Compile Include="RegularExpressions\BlackBox.cs" />
     <Compile Include="RegularExpressions\RegexTranslator.cs" />
     <Page Include="MainWindow.xaml">

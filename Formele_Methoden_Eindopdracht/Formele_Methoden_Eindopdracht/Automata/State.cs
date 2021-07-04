@@ -156,6 +156,10 @@ namespace Formele_Methoden_Eindopdracht
 
             return encounteredSymbols.Count == symbols.Count;
         }
+        public List<Transition> GetTransitions()
+        {
+            return transitions;
+        }
 
         public List<StateTransition> GetStateTransitions()
         {
