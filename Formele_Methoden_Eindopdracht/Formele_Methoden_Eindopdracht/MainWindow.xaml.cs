@@ -49,10 +49,6 @@ namespace Formele_Methoden_Eindopdracht
             this.createdAutomata.Add("b bba (epsilon NDFA)", TestAutomata.b_bba_with_epsilon_NDFA());
             this.createdAutomata.Add("ab aab aaa (epsilon NDFA)", TestAutomata.ab_aab_aaa_with_epsilon_NDFA());
 
-
-            this.createdAutomata["Contains abba"].Validate();
-            //this.createdAutomata.Add("aaa",TestAutomata.RegexAAA());
-            //this.createdAutomata.Add("aab", TestAutomata.RegexAAB());
             this.createdAutomata.Add("abc", TestAutomata.RegexABC());
             this.createdAutomata.Add("aorb", TestAutomata.RegexAorB());
             this.createdAutomata.Add("aloop", TestAutomata.RegexAloop());
@@ -64,6 +60,8 @@ namespace Formele_Methoden_Eindopdracht
             cmb_Automata_DropDownClosed(cmb_Automata, null);
             cmb_FirstAutomata_DropDownClosed(cmb_FirstAutomata, null);
             cmb_SecondAutomata_DropDownClosed(cmb_SecondAutomata, null);
+            cmb_VisualizeAutomata_DropDownClosed(cmb_VisualizeAutomata, null);
+            cmb_WordGenerationAutomata_DropDownClosed(cmb_WordGenerationAutomata, null);
 
             cmb_CreateAutomataTypes.ItemsSource = new List<string>() { "StartsWith", "EndsWith", "Contains", "EvenCharacters", "UnevenCharacters" };
             cmb_CreateAutomataTypes.SelectedIndex = 0;
@@ -71,13 +69,9 @@ namespace Formele_Methoden_Eindopdracht
             cmb_Operator.ItemsSource = new List<string>() { "AND", "OR", "NOT" };
             cmb_Operator.SelectedIndex = 0;
 
-            cmb_Conversion.ItemsSource = new List<string>() { "ToDFA", "Minimize_Table", "Minimize_Reverse" };
+            //cmb_Conversion.ItemsSource = new List<string>() { "ToDFA", "Minimize_Table", "Minimize_Reverse" };
+            cmb_Conversion.ItemsSource = new List<string>() { "ToDFA", "Minimize_Reverse" };
             cmb_Conversion.SelectedIndex = 0;
-
-            //List<char> symbols1 = new List<char>() { 'a', 'b' };
-            //Automata startsWith = AutomataBuilder.StartsWithDFA("ab", symbols1);
-            //startsWith.Minimized();
-            //int test = 0;
         }
 
         private void UpdateComboBoxes()
@@ -89,12 +83,14 @@ namespace Formele_Methoden_Eindopdracht
             cmb_SecondAutomata.ItemsSource = automataNames;
             cmb_ConversionAutomata.ItemsSource = automataNames;
             cmb_VisualizeAutomata.ItemsSource = automataNames;
+            cmb_WordGenerationAutomata.ItemsSource = automataNames;
 
             cmb_Automata.SelectedIndex = 0;
             cmb_FirstAutomata.SelectedIndex = 0;
             cmb_SecondAutomata.SelectedIndex = 0;
             cmb_ConversionAutomata.SelectedIndex = 0;
             cmb_VisualizeAutomata.SelectedIndex = 0;
+            cmb_WordGenerationAutomata.SelectedIndex = 0;
         }
 
         #region MENU_BUTTONS
@@ -106,6 +102,7 @@ namespace Formele_Methoden_Eindopdracht
             stk_ConversionPanel.Visibility = Visibility.Hidden;
             stk_RegularExpressionsPanel.Visibility = Visibility.Hidden;
             stk_GraphvizPanel.Visibility = Visibility.Hidden;
+            stk_WordGenerationPanel.Visibility = Visibility.Hidden;
 
             stk_AutomataPanel.Visibility = Visibility.Visible;
         }
@@ -117,6 +114,7 @@ namespace Formele_Methoden_Eindopdracht
             stk_ConversionPanel.Visibility = Visibility.Hidden;
             stk_RegularExpressionsPanel.Visibility = Visibility.Hidden;
             stk_GraphvizPanel.Visibility = Visibility.Hidden;
+            stk_WordGenerationPanel.Visibility = Visibility.Hidden;
 
             stk_CreateAutomataPanel.Visibility = Visibility.Visible;
         }
@@ -128,6 +126,7 @@ namespace Formele_Methoden_Eindopdracht
             stk_ConversionPanel.Visibility = Visibility.Hidden;
             stk_RegularExpressionsPanel.Visibility = Visibility.Hidden;
             stk_GraphvizPanel.Visibility = Visibility.Hidden;
+            stk_WordGenerationPanel.Visibility = Visibility.Hidden;
 
             stk_OperatorsPanel.Visibility = Visibility.Visible;
         }
@@ -139,6 +138,7 @@ namespace Formele_Methoden_Eindopdracht
             stk_OperatorsPanel.Visibility = Visibility.Hidden;
             stk_RegularExpressionsPanel.Visibility = Visibility.Hidden;
             stk_GraphvizPanel.Visibility = Visibility.Hidden;
+            stk_WordGenerationPanel.Visibility = Visibility.Hidden;
 
             stk_ConversionPanel.Visibility = Visibility.Visible;
         }
@@ -150,6 +150,7 @@ namespace Formele_Methoden_Eindopdracht
             stk_OperatorsPanel.Visibility = Visibility.Hidden;
             stk_ConversionPanel.Visibility = Visibility.Hidden;
             stk_GraphvizPanel.Visibility = Visibility.Hidden;
+            stk_WordGenerationPanel.Visibility = Visibility.Hidden;
 
             stk_RegularExpressionsPanel.Visibility = Visibility.Visible;
         }
@@ -161,8 +162,21 @@ namespace Formele_Methoden_Eindopdracht
             stk_OperatorsPanel.Visibility = Visibility.Hidden;
             stk_ConversionPanel.Visibility = Visibility.Hidden;
             stk_RegularExpressionsPanel.Visibility = Visibility.Hidden;
+            stk_WordGenerationPanel.Visibility = Visibility.Hidden;
 
             stk_GraphvizPanel.Visibility = Visibility.Visible;
+        }
+
+        private void btn_WordGeneration_Click(object sender, RoutedEventArgs e)
+        {
+            stk_AutomataPanel.Visibility = Visibility.Hidden;
+            stk_CreateAutomataPanel.Visibility = Visibility.Hidden;
+            stk_OperatorsPanel.Visibility = Visibility.Hidden;
+            stk_ConversionPanel.Visibility = Visibility.Hidden;
+            stk_RegularExpressionsPanel.Visibility = Visibility.Hidden;
+            stk_GraphvizPanel.Visibility = Visibility.Hidden;
+
+            stk_WordGenerationPanel.Visibility = Visibility.Visible;
         }
 
         #endregion
@@ -439,13 +453,6 @@ namespace Formele_Methoden_Eindopdracht
                         this.createdAutomata.Add(txb_ConversionName.Text, toDFAAutomata);
                         this.createdAutomata[txb_ConversionName.Text].Validate();
                     }
-                    else if(cmb_Conversion.Text.ToUpper() == "MINIMIZE_TABLE")
-                    {
-                        Automata minimizedAutomata = automata.Minimized();
-
-                        this.createdAutomata.Add(txb_ConversionName.Text, minimizedAutomata);
-                        this.createdAutomata[txb_ConversionName.Text].Validate();
-                    }
                     else if (cmb_Conversion.Text.ToUpper() == "MINIMIZE_REVERSE")
                     {
                         Automata minimizedAutomata = automata.Minimized2();
@@ -453,6 +460,13 @@ namespace Formele_Methoden_Eindopdracht
                         this.createdAutomata.Add(txb_ConversionName.Text, minimizedAutomata);
                         this.createdAutomata[txb_ConversionName.Text].Validate();
                     }
+                    //else if (cmb_Conversion.Text.ToUpper() == "MINIMIZE_TABLE")
+                    //{
+                    //    Automata minimizedAutomata = automata.Minimized();
+
+                    //    this.createdAutomata.Add(txb_ConversionName.Text, minimizedAutomata);
+                    //    this.createdAutomata[txb_ConversionName.Text].Validate();
+                    //}
 
                     txb_ConversionName.Text = "";
                     cmb_Conversion.SelectedIndex = 0;
@@ -650,6 +664,29 @@ namespace Formele_Methoden_Eindopdracht
             }
         }
 
+        private void cmb_WordGenerationAutomata_DropDownClosed(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cmb_WordGenerationAutomata.Text))
+            {
+                Automata selectedAutomata = this.createdAutomata[cmb_WordGenerationAutomata.Text];
+                if (selectedAutomata.IsDFA)
+                {
+                    lbl_WordGenerationAutomataTypeMessage.Content = "DFA";
+                    lbl_WordGenerationAutomataTypeMessage.Foreground = Brushes.Green;
+                }
+                else
+                {
+                    lbl_WordGenerationAutomataTypeMessage.Content = "NDFA";
+                    lbl_WordGenerationAutomataTypeMessage.Foreground = Brushes.Red;
+                }
+            }
+        }
+
         #endregion
+
+        private void btn_GenerateWords_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

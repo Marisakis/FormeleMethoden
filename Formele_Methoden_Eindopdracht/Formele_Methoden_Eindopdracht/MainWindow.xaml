@@ -58,6 +58,7 @@
             <Button x:Name="btn_Conversion" FontWeight="Bold" Content="Conversion" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_Conversion_Click"></Button>
             <Button x:Name="btn_RegularExpressionsMenu" FontWeight="Bold" Content="Regular Expressions" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_RegularExpressionsMenu_Click"></Button>
             <Button x:Name="btn_Graphviz" FontWeight="Bold" Content="Graphviz" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_Graphviz_Click"></Button>
+            <Button x:Name="btn_WordGeneration" FontWeight="Bold" Content="Word Generation" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_WordGeneration_Click"></Button>
         </StackPanel>
         <StackPanel x:Name="stk_AutomataPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Visible">
             <Label Content="Automata" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
@@ -149,7 +150,6 @@
             <Label Content="Regular Expression:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
             <TextBox x:Name="txb_ParseRegexInput" Width="400" Height="35" Margin="10,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
             <Button x:Name="btn_ParseRegex" Content="Parse Experssion" FontSize="16" Width="200" Height="35" Margin="10,10,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_ParseRegex_Click"></Button>
-
         </StackPanel>
         <StackPanel x:Name="stk_GraphvizPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
             <Label Content="Graphviz" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
@@ -162,6 +162,24 @@
                 <Button x:Name="btn_VisualizeAutomata" Content="Visualize" FontSize="16" Width="150" Height="35" Margin="10,0,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Click="btn_VisualizeAutomata_Click"></Button>
             </WrapPanel>
             <Image Width="1000" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"></Image>
+        </StackPanel>
+        <StackPanel x:Name="stk_WordGenerationPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
+            <Label Content="Word Generation" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <Label Content="Select automata:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <WrapPanel Margin="10,0,0,0">
+                <ComboBox x:Name="cmb_WordGenerationAutomata" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" DropDownClosed="cmb_WordGenerationAutomata_DropDownClosed"></ComboBox>
+                <Label x:Name="lbl_WordGenerationAutomataTypeMessage" Content="[Type]" Foreground="Green" FontSize="16" Margin="10,0,0,0"></Label>
+            </WrapPanel>
+            <WrapPanel Margin="10,10,10,10">
+                <Label Content="Length:" Foreground="White" FontSize="16"></Label>
+                <Label x:Name="lbl_WordGenerationResultMessage" Content="[Message]" Foreground="Green" FontSize="16" Margin="10,0,0,0" Visibility="Hidden"></Label>
+            </WrapPanel>
+            <WrapPanel Margin="10,0,10,10">
+                <TextBox x:Name="txb_WordGenerationLength" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+                <Button x:Name="btn_GenerateWords" Content="Generate words in language" FontSize="16" Width="250" Height="35" Margin="10,0,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Click="btn_GenerateWords_Click"></Button>
+            </WrapPanel>
+            <Label Content="Output:" Foreground="White" FontSize="16" Margin="10,10,10,0"></Label>
+            <TextBox x:Name="txb_WordGenerationOutput" Margin="10,10,10,10" Width="800" Height="350" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
         </StackPanel>
     </Grid>
 </Window>

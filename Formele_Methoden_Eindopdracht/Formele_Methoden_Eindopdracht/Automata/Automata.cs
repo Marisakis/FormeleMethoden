@@ -220,7 +220,7 @@ namespace Formele_Methoden_Eindopdracht
             Validate();
             if (this.isValid && this.isDFA)
             {
-                AutomataMinimizationTable minimizationTable = new AutomataMinimizationTable(this);
+                //AutomataMinimizationTable minimizationTable = new AutomataMinimizationTable(this);
             }
             else if(this.isValid)
                 Console.WriteLine("Unable to minimize automata, automata is not valid!");
@@ -528,20 +528,22 @@ namespace Formele_Methoden_Eindopdracht
             return true;
         }
 
+        #endregion
+
         public SortedSet<string> GenerateWordsInLanguage(int maxLength, int maxCycles)
         {
             int cycles = 0;
             var list = new SortedSet<string>();
-            foreach(State s in states.Values)
+            foreach (State s in states.Values)
             {
-                if(s.stateType == State.StateType.START_AND_END_STATE || s.stateType == State.StateType.START_STATE)
+                if (s.stateType == State.StateType.START_AND_END_STATE || s.stateType == State.StateType.START_STATE)
                 {
-                    foreach(Transition t in s.GetTransitions())
+                    foreach (Transition t in s.GetTransitions())
                     {
                         var newWord = "";
                         if (!t.IsEpsilon)
                             newWord = newWord + t.Character.ToString();
-                        SubGeneratewordsInLanguage(t.NextState, newWord ,maxLength, cycles, maxCycles, ref list);
+                        SubGeneratewordsInLanguage(t.NextState, newWord, maxLength, cycles, maxCycles, ref list);
                     }
 
                 }
@@ -624,8 +626,6 @@ namespace Formele_Methoden_Eindopdracht
                 }
             }
 
-        }
-        
-        #endregion
-    }*/
+        }*/
+    }
 }
