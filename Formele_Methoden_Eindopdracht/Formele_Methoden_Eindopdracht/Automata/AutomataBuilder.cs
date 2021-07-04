@@ -34,6 +34,7 @@ namespace Formele_Methoden_Eindopdracht
                 automata.GetState(text.Length.ToString()).AddMissingSymbolTransitions(symbols, automata.GetState(text.Length.ToString()));
             }
 
+            automata.Validate();
             return automata;
         }
 
@@ -71,6 +72,7 @@ namespace Formele_Methoden_Eindopdracht
                 }
             }
 
+            automata.Validate();
             return automata;
         }
 
@@ -109,6 +111,41 @@ namespace Formele_Methoden_Eindopdracht
                 automata.AddMissingSymbolTransitions(text.Length.ToString(), text.Length.ToString());
             }
 
+            automata.Validate();
+            return automata;
+        }
+
+        public static Automata EvenNumberOfCharacters(char character, List<char> symbols)
+        {
+            Automata automata = new Automata(symbols);
+
+            automata.AddStartAndEndState("1");
+            automata.AddIntermediateState("2");
+
+            automata.AddTransition(character, "1", "2");
+            automata.AddTransition(character, "2", "1");
+
+            automata.AddMissingSymbolTransitions("1", "1");
+            automata.AddMissingSymbolTransitions("2", "2");
+
+            automata.Validate();
+            return automata;
+        }
+
+        public static Automata UnevenNumberOfCharacters(char character, List<char> symbols)
+        {
+            Automata automata = new Automata(symbols);
+
+            automata.AddStartState("1");
+            automata.AddEndState("2");
+
+            automata.AddTransition(character, "1", "2");
+            automata.AddTransition(character, "2", "1");
+
+            automata.AddMissingSymbolTransitions("1", "1");
+            automata.AddMissingSymbolTransitions("2", "2");
+
+            automata.Validate();
             return automata;
         }
 
