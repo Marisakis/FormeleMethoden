@@ -1,6 +1,7 @@
 ﻿using System;
 using Automata;
 using Regex;
+using GraphViz;
 
 namespace AutomataTester
 {
@@ -15,9 +16,13 @@ namespace AutomataTester
             automata1.printTransitions();
             automata2.printTransitions();*/
 
-            var automata = RegexTranslator.translateRegex("(b)|a");
+            var automata = RegexTranslator.translateRegex("(b|a)");
             automata.printTransitions();
 
+            /*var automata1 = Automata.TestAutomata.getExampleSlide8Lesson2();
+            GraphVizGenerator.generateFiles(automata1);*/
+
+            
         }
     }
 }

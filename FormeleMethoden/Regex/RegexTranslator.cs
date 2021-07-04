@@ -11,7 +11,8 @@ namespace Regex
         {
             var fromState = "S";
             var toState = "F";
-            var transitions = BlackBox<String>.GenerateTransitions(fromState, input, toState);
+            var blackbox = new BlackBox<String>(fromState, input, toState);
+            var transitions = BlackBox2<String>.GenerateTransitions(fromState, input, toState);
             var automata = new Automata<String>();
             foreach(Transition<String> t in transitions)
             {

@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Automata
 {
     public class Automata<T> where T: IComparable<T>
     {
-        private ISet<Transition<T>> transitions;
+        private SortedSet<Transition<T>> transitions;
 
         private SortedSet<T> states;
         private SortedSet<T> startStates;
@@ -19,6 +21,16 @@ namespace Automata
         public Automata(char[] s) : this(new SortedSet<char>(s))
         { }
 
+        public IEnumerable<Transition<T>> getTransitions()
+        {
+            return transitions;
+        }
+
+        public SortedSet<T> getStartStates()
+        {
+            return this.startStates;
+        }
+
         public Automata(SortedSet<char> symbols)
         {
             transitions = new SortedSet<Transition<T>>();
@@ -26,6 +38,11 @@ namespace Automata
             startStates = new SortedSet<T>();
             finalStates = new SortedSet<T>();
             this.setAlphabet(symbols);
+        }
+
+        public SortedSet<T> getFinalStates()
+        {
+            return this.finalStates;
         }
 
         public void setAlphabet(char[] s)

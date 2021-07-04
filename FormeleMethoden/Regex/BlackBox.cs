@@ -1,11 +1,124 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Automata;
 
 namespace Regex
 {
-    class BlackBox<T> where T : IComparable<T>
+    class BlackBox<T> where T: IComparable<T>
+    {
+        public static int stateCounter;
+        private T fromState;
+        private ISet<BlackBox<T>> blackBoxes;
+        private T toState;
+        private char operation;
+
+        public BlackBox(T fromState, string input, T toState)
+        {
+            var stack = new Stack<char>();
+
+            foreach (char c in input)
+            {
+                stack.Push(c);
+            }
+
+            while(stack.Count != 0)
+            {
+                var symbol = stack.Pop();
+                var operation = stack.Peek();
+                var nextState = getNextState();
+
+                switch (symbol)
+                {
+                    default:
+                        {
+
+                            BlackBox<T> newBox = new BlackBox<T>(fromState, symbol.ToString(), nextState, operation);
+                            fromState = nextState;
+                            break;
+                        }
+                    case '(':
+                        {
+                            var bracketcounter = 1;
+                            var newString = "";
+                            while(bracketcounter != 0)
+                            {
+                                symbol = stack.Pop();
+                                newString = newString + symbol.ToString();
+                                if (symbol == '(')
+                                    bracketcounter--;
+                                else if (symbol == ')')
+                                    bracketcounter++;
+                                
+                            }
+                            newString = newString.Substring(0, newString.Length - 1); //remove closing bracket
+                            BlackBox<T> newBox = new BlackBox<T>(fromState, symbol.ToString(), nextState, operation);
+                            fromState = nextState;
+                            break;
+                        }
+                    
+                }
+                    
+
+
+            }
+
+
+
+
+
+            /*if(input.Contains("("))
+            {
+                foreach (char c in input)
+                {
+                    if (c == '(')
+                    {
+                        var firstbracket = input.IndexOf('(');
+                        var lastbracket = input.LastIndexOf(')'); // WRONG!
+                        //determine substrings
+                        var frontstring = "";
+                        var endstring = "";
+                        if (firstbracket > 0)
+                            frontstring = input.Substring(0, firstbracket);
+                        var bracketstring = input.Substring(firstbracket + 1, lastbracket - firstbracket - 1);
+                        if (lastbracket + 1 < input.Length)
+                            endstring = input.Substring(lastbracket + 1, input.Length - 1 - lastbracket);
+                        // assign transitions between substrings
+                        var state1 = getNextState();
+                        var state2 = getNextState();
+                        blackBoxes.Add(new BlackBox<T>(fromState, frontstring, state1));
+                        blackBoxes.Add(new BlackBox<T>(state1, bracketstring, state2));
+                        blackBoxes.Add(new BlackBox<T>(state2, endstring, toState));
+                        break;
+                    }
+                }
+            }*/
+            
+
+
+        }
+
+        private BlackBox(T fromState, string input, T toState, char operation)
+        {
+
+        }
+
+        /*public ISet<Transition<T>> GenerateTransitions()
+        {
+            var transitions = new SortedSet<Transition<T>>();
+
+        }*/
+
+        private static T getNextState()
+        {
+            var nextState = "q" + stateCounter;
+            stateCounter++;
+            return (T)(object)nextState;
+        }
+    }
+
+
+    class BlackBox2<T> where T : IComparable<T>
     {
 
         public static int stateCounter;
@@ -48,8 +161,35 @@ namespace Regex
             }
             else
             {
+                //TODO: fix () and | interactions
 
-                //check for |
+                //check for ()
+                foreach (char c in input)
+                {
+                    if (c == '(')
+                    {
+                        var firstbracket = input.IndexOf('(');
+                        var lastbracket = input.LastIndexOf(')');
+                        //determine substrings
+                        var frontstring = "";
+                        var endstring = "";
+                        if (firstbracket > 0)
+                            frontstring = input.Substring(0, firstbracket);
+                        var bracketstring = input.Substring(firstbracket + 1, lastbracket - firstbracket - 1);
+                        if (lastbracket + 1 < input.Length)
+                            endstring = input.Substring(lastbracket + 1, input.Length - 1 - lastbracket);
+                        // assign transitions between substrings
+                        var state1 = getNextState();
+                        var state2 = getNextState();
+                        transitions.UnionWith(GenerateSubTransitions(fromState, frontstring, state1));
+                        transitions.UnionWith(GenerateSubTransitions(state1, bracketstring, state2));
+                        transitions.UnionWith(GenerateSubTransitions(state2, endstring, toState));
+                        return transitions;
+                        break;
+                    }
+                }
+
+                //check for | 
                 foreach (char c in input)
                 {
                     if (c == '|')
@@ -77,31 +217,7 @@ namespace Regex
                     }
                 }
 
-                //check for ()
-                foreach (char c in input)
-                {
-                    if (c == '(')
-                    {
-                        var firstbracket = input.IndexOf('(');
-                        var lastbracket = input.LastIndexOf(')');
-                        //determine substrings
-                        var frontstring = "";
-                        var endstring = "";
-                        if (firstbracket > 0)
-                            frontstring = input.Substring(0, firstbracket);
-                        var bracketstring = input.Substring(firstbracket + 1, lastbracket - firstbracket -1);
-                        if (lastbracket + 1 < input.Length)
-                            endstring = input.Substring(lastbracket +1, input.Length - 1 - lastbracket );
-                        // assign transitions between substrings
-                        var state1 = getNextState();
-                        var state2 = getNextState();
-                        transitions.UnionWith(GenerateSubTransitions(fromState, frontstring, state1));
-                        transitions.UnionWith(GenerateSubTransitions(state1, bracketstring, state2));
-                        transitions.UnionWith(GenerateSubTransitions(state2, endstring, toState));
-                        return transitions;
-                        break;
-                    }
-                }
+                
 
                 //check for rest of operators: ε, +, *, . and only characters
                 var operation = input[1];
