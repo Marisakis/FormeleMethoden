@@ -576,9 +576,9 @@ namespace Formele_Methoden_Eindopdracht
 
         }
 
-        public SortedSet<string> GenerateWordsNotInLanguage(int maxLength, int maxCycles)
+        /*public SortedSet<string> GenerateWordsNotInLanguage(int maxLength, int maxCycles)
         {
-
+            this.ConvertToDFA();
                 int cycles = 0;
                 var list = new SortedSet<string>();
                 foreach (State s in states.Values)
@@ -627,5 +627,5 @@ namespace Formele_Methoden_Eindopdracht
         }
         
         #endregion
-    }
+    }*/
 }
