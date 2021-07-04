@@ -731,10 +731,14 @@ namespace Formele_Methoden_Eindopdracht
             }
         }
 
-        private void btn_VisualizeAutomata_Click(object sender, RoutedEventArgs e)
+        private static int imagecounter = 0;
+        private void btn_VisualizeAutomata_Click(object sender, RoutedEventArgs e) 
         {
             Automata automata = this.createdAutomata[cmb_VisualizeAutomata.Text];
-
+            var imageblock = stk_GraphvizPanel.Children.OfType<Image>().FirstOrDefault();
+            var uriSource = new Uri(GraphViz.GraphVizGenerator.generateFiles(automata, "automata" + imagecounter++.ToString())); //To improve: using automata names, but no spaces
+            var image = new BitmapImage(uriSource);
+            imageblock.Source = image;
 
         }
 

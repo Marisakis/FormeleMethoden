@@ -11,16 +11,16 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
     public class GraphVizGenerator
     {
 
-        public static void generateFiles(Automata automata)
+        public static String generateFiles(Automata automata, string filename) //May not contain spaces!
         {
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            //TODO: apply automata name to file name
-            var gvfile = Path.Combine(projectFolder, @"Automata.gv");
-            var pngfile = Path.Combine(projectFolder, @"Automata.png");
+            var gvFilePath = Path.Combine(projectFolder, @"" + filename + ".gv");
+            var pngFilePath = Path.Combine(projectFolder, @"" + filename + ".png");
             System.Diagnostics.Debug.WriteLine("Creating files in " + projectFolder);
 
-            GenerateGVFile(automata, gvfile);
-            generatePNGFromGV(gvfile, pngfile);
+            GenerateGVFile(automata, gvFilePath);
+            generatePNGFromGV(gvFilePath, pngFilePath);
+            return pngFilePath;
         }
 
         private static void GenerateGVFile(Automata automata, string gvFilepath)
@@ -37,7 +37,7 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
             foreach (string t in automata.getFinalStates())
             {
                 writer.WriteLine(t + " [shape=doublecircle]");
-            }*/
+            }*///old
 
             foreach(State s in automata.GetStates())
             {
@@ -57,7 +57,7 @@ namespace Formele_Methoden_Eindopdracht.GraphViz
 
         }
 
-        private static void generatePNGFromGV(string gvFilepath, string pngFilepath)
+        private static void generatePNGFromGV(string gvFilepath, string pngFilepath) // Does not overwrite files! 
         {
 
             System.Diagnostics.Process process = new System.Diagnostics.Process();

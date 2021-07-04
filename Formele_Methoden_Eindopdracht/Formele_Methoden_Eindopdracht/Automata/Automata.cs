@@ -10,11 +10,11 @@ namespace Formele_Methoden_Eindopdracht
     {
         public readonly List<char> symbols;
         private Dictionary<string, State> states;
-
         private State currentState;
 
         private bool isValid;
         private bool isDFA;
+        public string name;
 
         public bool IsDFA { get { return this.isDFA; } }
 
