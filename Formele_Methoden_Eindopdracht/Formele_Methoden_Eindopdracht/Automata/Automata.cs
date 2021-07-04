@@ -219,7 +219,7 @@ namespace Formele_Methoden_Eindopdracht
             Validate();
             if (this.isValid && this.isDFA)
             {
-                // TODO: Minimize automata
+                AutomataMinimizationTable minimizationTable = new AutomataMinimizationTable(this);
             }
             else if(this.isValid)
                 Console.WriteLine("Unable to minimize automata, automata is not valid!");
