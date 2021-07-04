@@ -34,12 +34,11 @@ namespace Formele_Methoden_Eindopdracht
 
             public int CompareTo(StateTransition other)
             {
-                if (((int)this.Character) < ((int)other.Character))
-                    return -1;
-                else if (((int)this.Character) > ((int)other.Character))
-                    return 1;
-                else
-                    return 0;
+                int fromCmp = PreviousState.CompareTo(other.PreviousState);
+                int symbolCmp = Character.CompareTo(other.Character);
+                int toCmp = NextState.CompareTo(other.NextState);
+
+                return (fromCmp != 0 ? fromCmp : (symbolCmp != 0 ? symbolCmp : toCmp));
             }
         }
 

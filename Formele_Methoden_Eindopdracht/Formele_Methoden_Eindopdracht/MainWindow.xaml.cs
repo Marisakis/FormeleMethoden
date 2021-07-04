@@ -43,6 +43,15 @@ namespace Formele_Methoden_Eindopdracht
             this.createdAutomata.Add("Contains abba", AutomataBuilder.ContainsDFA("abba", new List<char>() { 'a', 'b' }));
             this.createdAutomata.Add("Oneormore a followed by Oneormore b", TestAutomata.AOneOrMoreBOnOrMore_DFA());
             this.createdAutomata.Add("StartsWith ab and EndsWith ba", TestAutomata.StartsWith_ab_Endswith_ba_DFA());
+            this.createdAutomata["Contains abba"].Validate();
+            //this.createdAutomata.Add("aaa",TestAutomata.RegexAAA());
+            //this.createdAutomata.Add("aab", TestAutomata.RegexAAB());
+            this.createdAutomata.Add("abc", TestAutomata.RegexABC());
+            this.createdAutomata.Add("aorb", TestAutomata.RegexAorB());
+            this.createdAutomata.Add("aloop", TestAutomata.RegexAloop());
+
+            TestAutomata.RegexABC().GenerateWordsNotInLanguage(10,25);
+
             UpdateComboBoxes();
 
             cmb_Automata_DropDownClosed(cmb_Automata, null);

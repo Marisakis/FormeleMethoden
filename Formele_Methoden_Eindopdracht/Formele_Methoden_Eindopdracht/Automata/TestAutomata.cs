@@ -8,9 +8,42 @@ namespace Formele_Methoden_Eindopdracht
 {
     class TestAutomata
     {
-        #region DFA_AUTOMATA
+        public static Automata RegexAAA()
+        {
+            Automata automata = RegexTranslator.TranslateRegex("aaa");
+            automata.name = "aaa";
+            return automata;
+        }
 
-        public static Automata AOneOrMoreBOnOrMore_DFA()
+        public static Automata RegexAAB()
+        {
+            Automata automata = RegexTranslator.TranslateRegex("aab");
+            automata.name = "aab";
+            return automata;
+        }
+
+        public static Automata RegexABC()
+        {
+            Automata automata = RegexTranslator.TranslateRegex("abc");
+            automata.name = "abc";
+            return automata;
+        }
+
+        public static Automata RegexAorB()
+        {
+            Automata automata = RegexTranslator.TranslateRegex("a|b");
+            automata.name = "a|b";
+            return automata;
+        }
+
+        public static Automata RegexAloop()
+        {
+            Automata automata = RegexTranslator.TranslateRegex("a*");
+            automata.name = "a*";
+            return automata;
+        }
+
+        public static Automata EvenNumberOfCharacters(char character, List<char> symbols)
         {
             Automata automata = new Automata(new List<char>() { 'a', 'b' });
 
