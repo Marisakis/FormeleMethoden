@@ -143,7 +143,13 @@
             </WrapPanel>
         </StackPanel>
         <StackPanel x:Name="stk_RegularExpressionsPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
-            
+            <Label Content="Parse Regular Expression" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <Label Content="Name:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <TextBox x:Name="txb_ParseRegexName" Width="400" Height="35" Margin="10,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+            <Label Content="Regular Expression:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <TextBox x:Name="txb_ParseRegexInput" Width="400" Height="35" Margin="10,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+            <Button x:Name="btn_ParseRegex" Content="Parse Experssion" FontSize="16" Width="200" Height="35" Margin="10,10,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_ParseRegex_Click"></Button>
+
         </StackPanel>
         <StackPanel x:Name="stk_GraphvizPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
             <Label Content="Graphviz" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>

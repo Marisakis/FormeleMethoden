@@ -731,6 +731,14 @@ namespace Formele_Methoden_Eindopdracht
             }
         }
 
+        private void btn_ParseRegex_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Attempting to parse regex");
+            Automata automata = RegexTranslator.TranslateRegex(txb_ParseRegexInput.Text);
+            createdAutomata.Add(txb_ParseRegexName.Text, automata);
+            UpdateComboBoxes();
+        }
+
         private static int imagecounter = 0;
         private void btn_VisualizeAutomata_Click(object sender, RoutedEventArgs e) 
         {
