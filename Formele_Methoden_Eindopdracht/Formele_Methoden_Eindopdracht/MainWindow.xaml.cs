@@ -58,7 +58,28 @@ namespace Formele_Methoden_Eindopdracht
             cmb_Conversion.SelectedIndex = 0;
 
 
-            Automata regexAutomata = RegexTranslator.TranslateRegex("ab*");
+            //Automata regexAutomata = RegexTranslator.TranslateRegex("ab*");
+            ////regexAutomata.Minimized();
+
+            //Automata dfaRegex = regexAutomata.ConvertedToDFA();
+
+            //bool testResult1 = dfaRegex.Evaluate("ab");
+            //bool testResult2 = dfaRegex.Evaluate("abb");
+            //bool testResult3 = dfaRegex.Evaluate("abbb");
+            //bool testResult4 = dfaRegex.Evaluate("abbbb");
+
+            //bool testResult5 = dfaRegex.Evaluate("ba");
+            //bool testResult6 = dfaRegex.Evaluate("baa");
+            //bool testResult7 = dfaRegex.Evaluate("bbaa");
+            //bool testResult8 = dfaRegex.Evaluate("bbba");
+
+            //int test = 0;
+
+            List<char> symbols1 = new List<char>() { 'a', 'b' };
+            Automata startsWith = AutomataBuilder.StartsWithDFA("ab", symbols1);
+            startsWith.Minimized();
+            int test = 0;
+
 
             //List<char> symbols = new List<char>() { 'a', 'b' };
             //Automata evenAutomata = TestAutomata.EvenNumberOfCharacters('a', symbols);
