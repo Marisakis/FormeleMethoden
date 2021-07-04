@@ -41,6 +41,8 @@ namespace Formele_Methoden_Eindopdracht
             this.createdAutomata = new Dictionary<string, Automata>();
 
             this.createdAutomata.Add("Contains abba", AutomataBuilder.ContainsDFA("abba", new List<char>() { 'a', 'b' }));
+            this.createdAutomata.Add("Oneormore a followed by Oneormore b", TestAutomata.AOneOrMoreBOnOrMore_DFA());
+            this.createdAutomata.Add("StartsWith ab and EndsWith ba", TestAutomata.StartsWith_ab_Endswith_ba_DFA());
             this.createdAutomata["Contains abba"].Validate();
             //this.createdAutomata.Add("aaa",TestAutomata.RegexAAA());
             //this.createdAutomata.Add("aab", TestAutomata.RegexAAB());
@@ -65,297 +67,10 @@ namespace Formele_Methoden_Eindopdracht
             cmb_Conversion.ItemsSource = new List<string>() { "ToDFA", "Minimize_Table", "Minimize_Reverse" };
             cmb_Conversion.SelectedIndex = 0;
 
-
-            //Automata regexAutomata = RegexTranslator.TranslateRegex("ab*");
-            ////regexAutomata.Minimized();
-
-            //Automata dfaRegex = regexAutomata.ConvertedToDFA();
-
-            //bool testResult1 = dfaRegex.Evaluate("ab");
-            //bool testResult2 = dfaRegex.Evaluate("abb");
-            //bool testResult3 = dfaRegex.Evaluate("abbb");
-            //bool testResult4 = dfaRegex.Evaluate("abbbb");
-
-            //bool testResult5 = dfaRegex.Evaluate("ba");
-            //bool testResult6 = dfaRegex.Evaluate("baa");
-            //bool testResult7 = dfaRegex.Evaluate("bbaa");
-            //bool testResult8 = dfaRegex.Evaluate("bbba");
-
+            //List<char> symbols1 = new List<char>() { 'a', 'b' };
+            //Automata startsWith = AutomataBuilder.StartsWithDFA("ab", symbols1);
+            //startsWith.Minimized();
             //int test = 0;
-
-           /* List<char> symbols1 = new List<char>() { 'a', 'b' };
-            Automata startsWith = AutomataBuilder.StartsWithDFA("ab", symbols1);
-            startsWith.Minimized();
-            int test = 0;*/
-
-
-            //List<char> symbols = new List<char>() { 'a', 'b' };
-            //Automata evenAutomata = TestAutomata.EvenNumberOfCharacters('a', symbols);
-            //Automata unevenAutomata = TestAutomata.UnevenNumberOfCharacters('a', symbols);
-
-            //bool test11 = evenAutomata.Evaluate("a");
-            //bool test12 = evenAutomata.Evaluate("aa");
-            //bool test13 = evenAutomata.Evaluate("aaa");
-            //bool test14 = evenAutomata.Evaluate("aaaa");
-
-            //bool test21 = unevenAutomata.Evaluate("a");
-            //bool test22 = unevenAutomata.Evaluate("aa");
-            //bool test23 = unevenAutomata.Evaluate("aaa");
-            //bool test24 = unevenAutomata.Evaluate("aaaa");
-
-            //Automata even2Automata = Automata.Not(evenAutomata);
-            //Automata uneven2Automata = Automata.Not(unevenAutomata);
-
-            //bool test31 = even2Automata.Evaluate("a");
-            //bool test32 = even2Automata.Evaluate("aa");
-            //bool test33 = even2Automata.Evaluate("aaa");
-            //bool test34 = even2Automata.Evaluate("aaaa");
-
-            //bool test41 = uneven2Automata.Evaluate("a");
-            //bool test42 = uneven2Automata.Evaluate("aa");
-            //bool test43 = uneven2Automata.Evaluate("aaa");
-            //bool test44 = uneven2Automata.Evaluate("aaaa");
-
-            //Automata andAutomata = Automata.And(evenAutomata, unevenAutomata);
-
-            //bool test51 = andAutomata.Evaluate("a");
-            //bool test52 = andAutomata.Evaluate("aa");
-            //bool test53 = andAutomata.Evaluate("aaa");
-            //bool test54 = andAutomata.Evaluate("aaaa");
-
-            //Automata orAutomata = Automata.Or(evenAutomata, unevenAutomata);
-
-            //bool test61 = orAutomata.Evaluate("a");
-            //bool test62 = orAutomata.Evaluate("aa");
-            //bool test63 = orAutomata.Evaluate("aaa");
-            //bool test64 = orAutomata.Evaluate("aaaa");
-
-            //Console.WriteLine("Automata even:");
-            //Console.WriteLine("--------------------------------");
-            //Console.WriteLine(evenAutomata.ToString());
-            //Console.WriteLine("--------------------------------");
-
-            //Console.WriteLine("Automata even (not):");
-            //Console.WriteLine("--------------------------------");
-            //Console.WriteLine(even2Automata.ToString());
-            //Console.WriteLine("--------------------------------");
-
-            //Console.WriteLine("Automata uneven:");
-            //Console.WriteLine("--------------------------------");
-            //Console.WriteLine(unevenAutomata.ToString());
-            //Console.WriteLine("--------------------------------");
-
-            //Console.WriteLine("Automata uneven (not):");
-            //Console.WriteLine("--------------------------------");
-            //Console.WriteLine(uneven2Automata.ToString());
-            //Console.WriteLine("--------------------------------");
-
-
-
-
-
-            //List<char> symbols = new List<char>() { 'a', 'b' };
-            //Automata startsWithAutomataA = new Automata(symbols);
-            //startsWithAutomataA.AddStartState("1");
-            //startsWithAutomataA.AddIntermediateState("2");
-            //startsWithAutomataA.AddEndState("3");
-            //startsWithAutomataA.AddIntermediateState("fuik");
-
-            //startsWithAutomataA.AddTransition('a', "1", "2");
-            //startsWithAutomataA.AddTransition('b', "2", "3");
-            //startsWithAutomataA.AddMissingSymbolTransitions("1", "fuik");
-            //startsWithAutomataA.AddMissingSymbolTransitions("2", "fuik");
-            //startsWithAutomataA.AddMissingSymbolTransitions("3", "3");
-            //startsWithAutomataA.AddMissingSymbolTransitions("fuik", "fuik");
-
-            //Automata startsWithAutomataB = new Automata(symbols);
-            //startsWithAutomataB.AddStartState("1");
-            //startsWithAutomataB.AddEndState("2");
-            //startsWithAutomataB.AddIntermediateState("fuik");
-
-            //startsWithAutomataB.AddTransition('a', "1", "2");
-            //startsWithAutomataB.AddMissingSymbolTransitions("1", "fuik");
-            //startsWithAutomataB.AddMissingSymbolTransitions("2", "2");
-            //startsWithAutomataB.AddMissingSymbolTransitions("fuik", "fuik");
-
-            //bool resultA1 = startsWithAutomataA.Evaluate("abb");
-            //bool resultA2 = startsWithAutomataA.Evaluate("bab");
-
-            //bool resultB1 = startsWithAutomataA.Evaluate("bab");
-            //bool resultB2 = startsWithAutomataA.Evaluate("abb");
-
-            //Automata andAutomata = Automata.And(startsWithAutomataA, startsWithAutomataB);
-
-            //bool resultC1 = andAutomata.Evaluate("ab");
-            //bool resultC2 = andAutomata.Evaluate("a");
-            //bool resultC3 = andAutomata.Evaluate("ba");
-            //bool resultC4 = andAutomata.Evaluate("b");
-
-            //Automata orAutomata = Automata.Or(startsWithAutomataA, startsWithAutomataB);
-
-            //bool resultD1 = orAutomata.Evaluate("ab");
-            //bool resultD2 = orAutomata.Evaluate("a");
-            //bool resultD3 = orAutomata.Evaluate("ba");
-            //bool resultD4 = orAutomata.Evaluate("b");
-
-
-
-            //List<char> symbols = new List<char>() { 'a', 'b' };
-
-            //Automata startsWithDFA = AutomataBuilder.StartsWithDFA("abba", symbols);
-
-            //bool testA1 = startsWithDFA.Evaluate("abbababa");
-            //bool testA2 = startsWithDFA.Evaluate("baabbaba");
-
-            //Automata endsWithDFA = AutomataBuilder.EndsWithDFA("abba", symbols);
-
-            //bool testB1 = endsWithDFA.Evaluate("abbabbaa");
-            //bool testB2 = endsWithDFA.Evaluate("baababba");
-
-            //Automata containsDFA = AutomataBuilder.ContainsDFA("abba", symbols);
-
-            //bool testC1 = containsDFA.Evaluate("abbabbaa");
-            //bool testC2 = containsDFA.Evaluate("baababba");
-            //bool testC3 = containsDFA.Evaluate("baabbaab");
-            //bool testC4 = containsDFA.Evaluate("abababab");
-
-            //Automata testAutomata = Automata.And(startsWithDFA, endsWithDFA);
-
-            //Console.WriteLine(testAutomata.ToString());
-
-            //bool testResult1 = testAutomata.Evaluate("abbaabababba");
-            //bool testResult2 = testAutomata.Evaluate("babaabbababa");
-            //bool testResult3 = testAutomata.Evaluate("abbababababa");
-            //bool testResult4 = testAutomata.Evaluate("babababaabba");
-
-            //lbl_Output.Content = "";
-
-            //GetSymbolsFromString("a,,b");
-
-
-
-
-
-            List<char> symbols = new List<char>() { 'a', 'b' };
-
-            //Automata a = new Automata(symbols);
-
-            //a.AddStartState("0");
-            //a.AddIntermediateState("1");
-            //a.AddEndState("2");
-
-            //a.AddTransition('a', "0", "1");
-            //a.AddTransition('b', "1", "2");
-
-            //Automata aDFA = a.ConvertedToDFA();
-
-            //// Should accept
-            //bool aResult1A = aDFA.Evaluate("ab");
-
-            //// Should decline
-            //bool aResult1D = aDFA.Evaluate("ba");
-            //bool aResult2D = aDFA.Evaluate("bbba");
-            //bool aResult3D = aDFA.Evaluate("baaa");
-            //bool aResult4D = aDFA.Evaluate("bbaa");
-
-            //Console.WriteLine(a.ToString());
-            //Console.WriteLine(aDFA.ToString());
-
-            //Automata b = new Automata(symbols);
-
-            //b.AddStartState("0");
-            //b.AddIntermediateState("1");
-            //b.AddIntermediateState("3");
-            //b.AddEndState("2");
-            //b.AddEndState("4");
-
-            //b.AddTransition('b', "0", "1");
-            //b.AddTransition('a', "1", "2");
-            //b.AddTransition('b', "1", "3");
-            //b.AddTransition('a', "3", "4");
-
-            //Automata bDFA = b.ConvertedToDFA();
-
-            //// Should accept
-            //bool bResult1A = bDFA.Evaluate("ba");
-            //bool bResult2A = bDFA.Evaluate("bba");
-
-            //// Should decline
-            //bool bResult1D = bDFA.Evaluate("ab");
-            //bool bResult2D = bDFA.Evaluate("aaab");
-            //bool bResult3D = bDFA.Evaluate("abbb");
-            //bool bResult4D = bDFA.Evaluate("aabb");
-
-            //Console.WriteLine(b.ToString());
-            //Console.WriteLine(bDFA.ToString());
-
-            Automata c = new Automata(symbols);
-
-            c.AddStartState("0");
-            c.AddIntermediateState("1");
-            c.AddIntermediateState("2");
-            c.AddIntermediateState("4");
-            c.AddIntermediateState("5");
-            c.AddIntermediateState("7");
-            c.AddIntermediateState("9");
-            c.AddEndState("3");
-            c.AddEndState("6");
-            c.AddEndState("8");
-
-            c.AddTransition('a', "0", "1");
-            c.AddTransition("1", "2");
-            c.AddTransition('b', "2", "3");
-
-            c.AddTransition("1", "4");
-            c.AddTransition('a', "4", "5");
-            c.AddTransition('b', "5", "6");
-
-            c.AddTransition('a', "5", "7");
-            c.AddTransition("7", "8");
-
-            Automata cDFA = c.ConvertedToDFA();
-
-            // Should accept
-            bool cResult1A = cDFA.Evaluate("ab");
-            bool cResult2A = cDFA.Evaluate("aab");
-            bool cResult3A = cDFA.Evaluate("aaa");
-
-            // Should decline
-            bool cResult1D = cDFA.Evaluate("ab");
-            bool cResult2D = cDFA.Evaluate("aaab");
-            bool cResult3D = cDFA.Evaluate("abbb");
-            bool cResult4D = cDFA.Evaluate("aabb");
-
-            //Console.WriteLine(c.ToString());
-            //Console.WriteLine(cDFA.ToString());
-
-            //Automata d = new Automata(symbols);
-
-            //d.AddStartState("0");
-            //d.AddIntermediateState("1");
-            //d.AddIntermediateState("3");
-            //d.AddEndState("2");
-            //d.AddEndState("4");
-
-            //d.AddTransition('b', "0", "1");
-            //d.AddTransition("1", "2");
-            //d.AddTransition('b', "1", "3");
-            //d.AddTransition('a', "3", "4");
-
-            //Automata dDFA = d.ConvertedToDFA();
-
-            //// Should accept
-            //bool dResult1A = dDFA.Evaluate("b");
-            //bool dResult2A = dDFA.Evaluate("bba");
-
-            //// Should decline
-            //bool dResult1D = dDFA.Evaluate("ab");
-            //bool dResult2D = dDFA.Evaluate("aaab");
-            //bool dResult3D = dDFA.Evaluate("bbaa");
-            //bool dResult4D = dDFA.Evaluate("aabb");
-
-            //Console.WriteLine(d.ToString());
-            //Console.WriteLine(dDFA.ToString());
         }
 
         private void UpdateComboBoxes()
@@ -813,13 +528,13 @@ namespace Formele_Methoden_Eindopdracht
                     {
                         if (input.Length > 1)
                             return new Tuple<string, Automata>("Only one character can be used as input for this automata type!", null);
-                        return new Tuple<string, Automata>("", TestAutomata.EvenNumberOfCharacters(input[0], symbols));
+                        return new Tuple<string, Automata>("", AutomataBuilder.EvenNumberOfCharacters(input[0], symbols));
                     }
                 case "UNEVENCHARACTERS":
                     {
                         if (input.Length > 1)
                             return new Tuple<string, Automata>("Only one character can be used as input for this automata type!", null);
-                        return new Tuple<string, Automata>("", TestAutomata.UnevenNumberOfCharacters(input[0], symbols));
+                        return new Tuple<string, Automata>("", AutomataBuilder.UnevenNumberOfCharacters(input[0], symbols));
                     }
             }
 

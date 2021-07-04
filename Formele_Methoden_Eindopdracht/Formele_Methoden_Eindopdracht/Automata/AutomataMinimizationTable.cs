@@ -244,17 +244,27 @@ namespace Formele_Methoden_Eindopdracht
 
         private void ConstructPartitions(Automata automata)
         {
-            Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>> partitionEvaluation = EvaluateLastPartition();
+            bool shouldPartition = false;
+            while(!shouldPartition)
+            {
+                shouldPartition = false;
+                Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>> partitionEvaluation = EvaluateLastPartition(ref shouldPartition);
+                
+                if(shouldPartition)
+                {
+                    Partition partition = new Partition(automata.symbols);
 
 
+                    this.partitions.Add(partition);
+                }
+            }
         }
 
         // Returns two dictionaries with keys indicating the segment name and a list of state names which are withing the segment
-        private Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>> EvaluateLastPartition()
+        private Tuple<Dictionary<string, List<string>>, Dictionary<string, List<string>>> EvaluateLastPartition(ref bool shouldPartition)
         {
             Partition lastPartition = this.partitions[this.partitions.Count - 1];
 
-            bool shouldPartition = false;
             Dictionary<string, List<string>> primaryDictionary = EvaluateSegments(lastPartition.PrimarySegments, ref lastPartition, ref shouldPartition);
             Dictionary<string, List<string>> secondaryDictionary = EvaluateSegments(lastPartition.SecondarySegments, ref lastPartition, ref shouldPartition);
 
@@ -262,7 +272,7 @@ namespace Formele_Methoden_Eindopdracht
         }
 
         // Returns dictionary with keys indicating the segment name and a list of state names which are withing the segment
-        private Dictionary<string, List<string>> EvaluateSegments(List<PartitionSegment> segments, ref Partition lastPartition, ref bool shouldPartition)
+        private Dictionary<string, List<string>> EvaluateSegments(List<PartitionSegment> segments, ref Partition partition, ref bool shouldPartition)
         {
             Dictionary<string, List<string>> segmentDictionary = new Dictionary<string, List<string>>();
             foreach (PartitionSegment segment in segments)
@@ -270,6 +280,8 @@ namespace Formele_Methoden_Eindopdracht
                 Dictionary<string, string> segmentDefinitions = new Dictionary<string, string>();
                 foreach (PartitionEntry entry in segment.Entries)
                 {
+                    string segmentName = partition.GetSegmentNameContainingState(entry.StateName);
+
                     //if (segmentDefinitions.ContainsKey(segment.SegmentName))
                     //    segmentDefinitions.Add(segment.SegmentName, new List<string>());
                     //segmentDefinitions[segment.SegmentName].Add(entry.StateName);
