@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formele_Methoden_Eindopdracht", "Formele_Methoden_Eindopdracht\Formele_Methoden_Eindopdracht.csproj", "{1DD88F0B-CCC8-4D7E-B5F5-5857D986FC7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DD88F0B-CCC8-4D7E-B5F5-5857D986FC7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD88F0B-CCC8-4D7E-B5F5-5857D986FC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD88F0B-CCC8-4D7E-B5F5-5857D986FC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD88F0B-CCC8-4D7E-B5F5-5857D986FC7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {094F0477-0E0A-422D-B48B-677622E2CADA}
+	EndGlobalSection
+EndGlobal

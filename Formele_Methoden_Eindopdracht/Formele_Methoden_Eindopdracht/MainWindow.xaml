@@ -1,0 +1,161 @@
+﻿<Window x:Class="Formele_Methoden_Eindopdracht.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Formele_Methoden_Eindopdracht"
+        mc:Ignorable="d"
+        Title="Formele Methoden" Height="720" Width="1280" Background="#FF1E1E1E">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="Background" Value="#FF2D2D30"></Setter>
+                <Setter Property="Foreground" Value="White"></Setter>
+                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="Margin" Value="0,0,0,0"></Setter>
+            </Style.Setters>
+        </Style>
+        <ControlTemplate x:Key="ButtonControlTemplate" TargetType="{x:Type Button}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FF007ACC"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FF007ACC"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FF323234"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF323234"/>
+                    <Setter Property="Foreground" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF2D2D30" Grid.RowSpan="2">
+            <Button x:Name="btn_AutomataMenu" FontWeight="Bold" Content="Automata" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_AutomataMenu_Click"></Button>
+            <Button x:Name="btn_CreateAutomataMenu" FontWeight="Bold" Content="Create Automata" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_CreateAutomataMenu_Click"></Button>
+            <Button x:Name="btn_OperatorsMenu" FontWeight="Bold" Content="Operators" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_OperatorsMenu_Click"></Button>
+            <Button x:Name="btn_Conversion" FontWeight="Bold" Content="Conversion" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_Conversion_Click"></Button>
+            <Button x:Name="btn_RegularExpressionsMenu" FontWeight="Bold" Content="Regular Expressions" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_RegularExpressionsMenu_Click"></Button>
+            <Button x:Name="btn_Graphviz" FontWeight="Bold" Content="Graphviz" HorizontalContentAlignment="Left" FontSize="18" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Padding="10,0,0,0" Click="btn_Graphviz_Click"></Button>
+        </StackPanel>
+        <StackPanel x:Name="stk_AutomataPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Visible">
+            <Label Content="Automata" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <Label Content="Select automata:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <WrapPanel Margin="10,0,0,0">
+                <ComboBox x:Name="cmb_Automata" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" DropDownClosed="cmb_Automata_DropDownClosed"></ComboBox>
+                <Label x:Name="lbl_AutomataTypeMessage" Content="[Type]" Foreground="Green" FontSize="16" Margin="10,0,0,0"></Label>
+            </WrapPanel>
+            <WrapPanel Margin="10,10,10,10">
+                <Label Content="Input:" Foreground="White" FontSize="16"></Label>
+                <Label x:Name="lbl_ResultMessage" Content="[Message]" Foreground="Green" FontSize="16" Margin="10,0,0,0" Visibility="Hidden"></Label>
+            </WrapPanel>
+            <WrapPanel Margin="10,0,10,10">
+                <TextBox x:Name="txb_EvaluateInput" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+                <Button x:Name="btn_Evaluate" Content="Evaluate" FontSize="16" Width="150" Height="35" Margin="10,0,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Click="btn_Evaluate_Click"></Button>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel x:Name="stk_CreateAutomataPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
+            <Label Content="Create Automata" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <Label Content="Name:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <TextBox x:Name="txb_CreateAutomataName" Width="400" Height="35" Margin="10,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+            <Label Content="Automata type:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <ComboBox x:Name="cmb_CreateAutomataTypes" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="16"></ComboBox>
+            <WrapPanel Margin="10,10,10,10">
+                <StackPanel>
+                    <WrapPanel>
+                        <Label Content="Input:" Foreground="White" FontSize="16" Margin="0,0,0,10"></Label>
+                        <Label Content="(Only defined symbols allowed)" Foreground="Orange" FontSize="16" Margin="0,0,0,10"></Label>
+                    </WrapPanel>
+                    <TextBox x:Name="txb_CreateAutomataInput" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+                </StackPanel>
+                <StackPanel Margin="20,0,0,0">
+                    <WrapPanel>
+                        <Label Content="Symbols:" Foreground="White" FontSize="16" Margin="0,0,0,10"></Label>
+                        <Label Content="a,b,c,d" Foreground="Orange" FontSize="16" Margin="0,0,0,10"></Label>
+                    </WrapPanel>
+                    <TextBox x:Name="txb_CreateAutomataSymbols" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+                </StackPanel>
+            </WrapPanel>
+            <WrapPanel>
+                <Button x:Name="btn_CreateAutomata" Content="Create Automata" FontSize="16" Width="200" Height="35" Margin="10,10,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_CreateAutomata_Click"></Button>
+                <Label x:Name="lbl_CreateAutomataMessage" Content="Message" Foreground="Red" FontSize="16" Margin="10,10,0,10" Visibility="Hidden"></Label>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel x:Name="stk_OperatorsPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
+            <Label Content="Operators" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <Label Content="Name:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <TextBox x:Name="txb_OperatorsCreateAutomataName" Width="400" Height="35" Margin="10,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+            <Label Content="Operator:" Margin="10,0,10,10" Foreground="White" FontSize="16"></Label>
+            <ComboBox x:Name="cmb_Operator" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,10" FontSize="16" DropDownClosed="cmb_Operator_DropDownClosed"></ComboBox>
+            <WrapPanel Margin="10,0,10,10">
+                <StackPanel>
+                    <WrapPanel>
+                        <Label x:Name="lbl_FirstAutomata" Content="First Automata:" Foreground="White" FontSize="16"></Label>
+                        <Label x:Name="lbl_FirstAutomataTypeMessage" Content="[Type]" Foreground="Green" FontSize="16"></Label>
+                    </WrapPanel>
+                    <ComboBox x:Name="cmb_FirstAutomata" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,10,0,0" FontSize="16" DropDownClosed="cmb_FirstAutomata_DropDownClosed"></ComboBox>
+                </StackPanel>
+                <StackPanel Margin="10,0,0,0">
+                    <WrapPanel>
+                        <Label x:Name="lbl_SecondAutomata" Content="Second Automata:" Foreground="White" FontSize="16"></Label>
+                        <Label x:Name="lbl_SecondAutomataTypeMessage" Content="[Type]" Foreground="Green" FontSize="16"></Label>
+                    </WrapPanel>
+                    <ComboBox x:Name="cmb_SecondAutomata" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,10,0,0" FontSize="16" DropDownClosed="cmb_SecondAutomata_DropDownClosed"></ComboBox>
+                </StackPanel>
+            </WrapPanel>
+            <WrapPanel>
+                <Button x:Name="btn_OperatorCreateAutomata" Content="Create Automata" FontSize="16" Width="200" Height="35" Margin="10,10,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_OperatorCreateAutomata_Click"></Button>
+                <Label x:Name="lbl_OperatorCreateAutomataMessage" Content="Message" Foreground="Red" FontSize="16" Margin="10,10,0,10" Visibility="Hidden"></Label>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel x:Name="stk_ConversionPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
+            <Label Content="Conversion" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <Label Content="Name:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <TextBox x:Name="txb_ConversionName" Width="400" Height="35" Margin="10,0,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" FontSize="16" Background="#FF2D2D30" BorderBrush="#FF686868"></TextBox>
+            <Label Content="Conversion:" Margin="10,0,10,10" Foreground="White" FontSize="16"></Label>
+            <ComboBox x:Name="cmb_Conversion" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,10" FontSize="16" DropDownClosed="cmb_Operator_DropDownClosed"></ComboBox>
+            <Label x:Name="lbl_ConversionAutomata" Content="Automata:" Foreground="White" FontSize="16" Margin="10,0,10,10"></Label>
+            <ComboBox x:Name="cmb_ConversionAutomata" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,10" FontSize="16"></ComboBox>
+            <WrapPanel>
+                <Button x:Name="btn_ConversionCreateAutomata" Content="Create Automata" FontSize="16" Width="200" Height="35" Margin="10,10,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_ConversionCreateAutomata_Click"></Button>
+                <Label x:Name="lbl_ConversionCreateAutomataMessage" Content="Message" Foreground="Red" FontSize="16" Margin="10,10,0,10" Visibility="Hidden"></Label>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel x:Name="stk_RegularExpressionsPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
+            
+        </StackPanel>
+        <StackPanel x:Name="stk_GraphvizPanel" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2" Visibility="Hidden">
+            <Label Content="Graphviz" Foreground="White" FontSize="25" Margin="10,10,10,10" FontWeight="Bold"></Label>
+            <WrapPanel Margin="10,0,10,10">
+                <Label Content="Select automata:" Foreground="White" FontSize="16"></Label>
+                <Label x:Name="lbl_VisualizeAutomataMessage" Content="DFA" Foreground="Green" FontSize="16"></Label>
+            </WrapPanel>
+            <WrapPanel Margin="10,0,10,10">
+                <ComboBox x:Name="cmb_VisualizeAutomata" Width="400" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" DropDownClosed="cmb_VisualizeAutomata_DropDownClosed"></ComboBox>
+                <Button x:Name="btn_VisualizeAutomata" Content="Visualize" FontSize="16" Width="150" Height="35" Margin="10,0,0,0" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonControlTemplate}" Click="btn_VisualizeAutomata_Click"></Button>
+            </WrapPanel>
+            <Image Width="1000" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"></Image>
+        </StackPanel>
+    </Grid>
+</Window>
