@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -527,6 +528,104 @@ namespace Formele_Methoden_Eindopdracht
             return true;
         }
 
+        public SortedSet<string> GenerateWordsInLanguage(int maxLength, int maxCycles)
+        {
+            int cycles = 0;
+            var list = new SortedSet<string>();
+            foreach(State s in states.Values)
+            {
+                if(s.stateType == State.StateType.START_AND_END_STATE || s.stateType == State.StateType.START_STATE)
+                {
+                    foreach(Transition t in s.GetTransitions())
+                    {
+                        var newWord = "";
+                        if (!t.IsEpsilon)
+                            newWord = newWord + t.Character.ToString();
+                        SubGeneratewordsInLanguage(t.NextState, newWord ,maxLength, cycles, maxCycles, ref list);
+                    }
+
+                }
+            }
+            list.Remove("");
+            return list;
+        }
+
+        private void SubGeneratewordsInLanguage(State s, string word, int maxLength, int cycles, int maxCycles, ref SortedSet<string> list)
+        {
+            cycles++;
+            if (cycles < maxCycles)
+            {
+                if (word.Length <= maxLength)
+                {
+                    if (s.stateType == State.StateType.END_STATE || s.stateType == State.StateType.START_AND_END_STATE)
+                    {
+                        list.Add(word);
+                    }
+                    foreach (Transition t in s.GetTransitions())
+                    {
+                        var newWord = word;
+                        if (!t.IsEpsilon)
+                            newWord = newWord + t.Character.ToString();
+
+
+                        SubGeneratewordsInLanguage(t.NextState, newWord, maxLength, cycles, maxCycles, ref list);
+                    }
+
+                }
+            }
+
+        }
+
+        public SortedSet<string> GenerateWordsNotInLanguage(int maxLength, int maxCycles)
+        {
+
+                int cycles = 0;
+                var list = new SortedSet<string>();
+                foreach (State s in states.Values)
+                {
+                    if (s.stateType == State.StateType.START_AND_END_STATE || s.stateType == State.StateType.START_STATE)
+                    {
+                        foreach (Transition t in s.GetTransitions())
+                        {
+                            var newWord = "";
+                            if (!t.IsEpsilon)
+                                newWord = newWord + t.Character.ToString();
+                            SubGeneratewordsNotInLanguage(t.NextState, newWord, maxLength, cycles, maxCycles, ref list);
+                        }
+
+                    }
+                }
+                list.Remove("");
+                return list;
+            
+        }
+
+        private void SubGeneratewordsNotInLanguage(State s, string word, int maxLength, int cycles, int maxCycles, ref SortedSet<string> list)
+        {
+            cycles++;
+            if (cycles < maxCycles)
+            {
+                if (word.Length <= maxLength)
+                {
+                    if (s.stateType != State.StateType.END_STATE && s.stateType != State.StateType.START_AND_END_STATE)
+                    {
+                        list.Add(word);
+                    }
+                    foreach (Transition t in s.GetTransitions())
+                    {
+                        var newWord = word;
+                        if (!t.IsEpsilon)
+                            newWord = newWord + t.Character.ToString();
+
+
+                        SubGeneratewordsInLanguage(t.NextState, newWord, maxLength, cycles, maxCycles, ref list);
+                    }
+
+                }
+            }
+
+        }
+        
         #endregion
     }
 }

@@ -1,0 +1,6 @@
+digraph graphname {
+S -> q1 [label=a];
+F [shape=doublecircle]
+q1 -> q2 [label=b];
+q2 -> F [label=c];
+}
