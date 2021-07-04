@@ -48,7 +48,7 @@ namespace Formele_Methoden_Eindopdracht
             this.createdAutomata.Add("aorb", TestAutomata.RegexAorB());
             this.createdAutomata.Add("aloop", TestAutomata.RegexAloop());
 
-            TestAutomata.RegexABC().GenerateWordsNotInLanguage(10,25);
+            //TestAutomata.RegexABC().GenerateWordsNotInLanguage(10,25);
 
             UpdateComboBoxes();
 
